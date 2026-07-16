@@ -1,0 +1,9 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.example.cukin",
+    "sha256_cert_fingerprints":
+    ["B7:26:58:71:AD:ED:DD:8E:8F:1D:99:94:BD:64:11:94:FE:47:18:B5:B9:ED:28:2E:6D:37:26:C9:1A:C8:4A:51"]
+  }
+}]
