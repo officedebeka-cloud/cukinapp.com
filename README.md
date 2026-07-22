@@ -3,4 +3,4 @@
 # cukinapp.com
 
 🔗 **Web:** [cukinapp.com](https://cukinapp.com)
-📧 **Contacto:** [contacto@cukin.app](mailto:contacto@cukin.app)
+📧 **Contact:** [contact@cukinapp.com](mailto:contact@cukinapp.com)
