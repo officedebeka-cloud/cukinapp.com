@@ -1,94 +1,101 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Política de Privacidad | Cukin</title>
-    <!-- Cargamos Tailwind CSS para un diseño moderno y responsive sin esfuerzo -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Política de Privacidad - CUKIN</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',system-ui,sans-serif;background:#0A0A0A;color:#fff;line-height:1.7;-webkit-font-smoothing:antialiased}
+.container{max-width:840px;margin:0 auto;padding:48px 24px 80px}
+.top a{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.5);text-decoration:none;border:1px solid rgba(255,255,255,.1);padding:8px 14px;border-radius:999px;display:inline-flex;align-items:center;gap:6px}
+.top a:hover{color:#fff;border-color:rgba(255,255,255,.2)}
+h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(32px,5vw,48px);font-weight:700;letter-spacing:-.02em;margin:24px 0 8px;line-height:1.05}
+h1 span{color:#FF4D00}
+.subtitle{color:rgba(255,255,255,.5);font-size:14px;margin-bottom:40px}
+.card{background:#111;border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:28px;margin:24px 0}
+h2{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;margin:0 0 14px;display:flex;gap:10px;align-items:center;color:#fff}
+h2 .num{width:28px;height:28px;border-radius:999px;background:#FF4D00;color:#000;font-size:14px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+p{color:rgba(255,255,255,.72);font-size:15px;margin:0 0 14px}
+strong{color:#fff}
+ul{list-style:none;padding:0;margin:12px 0}
+li{position:relative;padding-left:22px;margin:10px 0;color:rgba(255,255,255,.72);font-size:14.5px;line-height:1.6}
+li::before{content:'•';position:absolute;left:6px;top:0;color:#FF4D00;font-weight:700}
+li b{color:#fff}
+.highlight{background:rgba(255,77,0,0.08);border:1px solid rgba(255,77,0,0.18);border-radius:12px;padding:14px 16px;margin:14px 0;font-size:13px;color:rgba(255,255,255,.7)}
+.contact{margin-top:40px;padding:24px;border-radius:20px;background:linear-gradient(135deg,#FF4D00 0%,#FF8A00 100%);color:#000}
+.contact h2{color:#000}
+.contact p{color:rgba(0,0,0,.7)}
+.contact a{color:#000;font-weight:700;text-decoration:underline}
+.footer{margin-top:40px;display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.footer a{color:rgba(255,255,255,.5);text-decoration:none;font-size:13px}
+.footer a:hover{color:#fff}
+.copy{margin-top:16px;text-align:center;color:rgba(255,255,255,.35);font-size:12px}
+</style>
 </head>
-<body class="bg-gray-50 text-gray-800 antialiased">
+<body>
+<div class="container">
+  <div class="top"><a href="/">← Volver a CUKIN</a></div>
+  <h1>Política de <span>Privacidad</span></h1>
+  <p class="subtitle">Última actualización: 18 de julio de 2026</p>
 
-    <!-- Cabecera -->
-    <header class="bg-[#111111] py-6 shadow-md">
-        <div class="max-w-4xl mx-auto px-4 flex items-center justify-center sm:justify-start">
-            <h1 class="text-3xl font-bold text-[#F15A24] tracking-wider">CUKIN</h1>
-        </div>
-    </header>
+  <div class="card">
+    <h2><span class="num">1</span> Introducción</h2>
+    <p>Bienvenido a Cukin, la red social de los verdaderos Chefs. Tu privacidad es fundamental para nosotros. Esta Política de Privacidad explica cómo recopilamos, usamos, compartimos y protegemos tu información personal cuando utilizas nuestra aplicación móvil, en cumplimiento con el <strong>Reglamento General de Protección de Datos (RGPD)</strong> de la UE y la <strong>Ley de Privacidad del Consumidor de California (CCPA)</strong>.</p>
+  </div>
 
-    <!-- Contenido Principal -->
-    <main class="max-w-4xl mx-auto px-4 py-10">
-        <div class="bg-white p-8 md:p-12 rounded-2xl shadow-sm border border-gray-100">
-            
-            <h2 class="text-3xl font-bold mb-2">Política de Privacidad</h2>
-            <p class="text-gray-500 mb-8 pb-6 border-b border-gray-200">Última actualización: 18 de julio de 2026</p>
+  <div class="card">
+    <h2><span class="num">2</span> Información que recopilamos</h2>
+    <ul>
+      <li><b>Datos de la cuenta:</b> Para crear tu perfil, recopilamos tu dirección de correo electrónico y una contraseña segura.</li>
+      <li><b>Información del perfil:</b> Datos opcionales que decides compartir, como tu nombre de Chef, biografía, enlaces sociales y tu foto de perfil (avatar).</li>
+      <li><b>Contenido generado por el usuario:</b> Las recetas, ingredientes, fotografías y valoraciones que subes a nuestra cocina digital.</li>
+      <li><b>Datos biométricos (Huella / Face ID):</b> Cukin permite el inicio de sesión rápido mediante biometría.</li>
+    </ul>
+    <div class="highlight"><strong>Nota importante:</strong> Cukin utiliza las interfaces nativas de tu dispositivo (Android / iOS). Nosotros nunca recopilamos, almacenamos ni transmitimos tu huella dactilar o datos faciales a nuestros servidores.</div>
+  </div>
 
-            <div class="space-y-8 text-gray-600 leading-relaxed">
-                
-                <section>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-3">1. Introducción</h3>
-                    <p>Bienvenido a Cukin, la red social de los verdaderos Chefs. Tu privacidad es fundamental para nosotros. Esta Política de Privacidad explica cómo recopilamos, usamos, compartimos y protegemos tu información personal cuando utilizas nuestra aplicación móvil, en cumplimiento con el Reglamento General de Protección de Datos (RGPD) de la UE y la Ley de Privacidad del Consumidor de California (CCPA).</p>
-                </section>
+  <div class="card">
+    <h2><span class="num">3</span> Cómo utilizamos tu información</h2>
+    <p>Utilizamos los datos recopilados exclusivamente para:</p>
+    <ul>
+      <li>Crear y gestionar tu cuenta de usuario.</li>
+      <li>Permitirte publicar recetas y visualizar el contenido de otros Chefs.</li>
+      <li>Mejorar la estabilidad, seguridad y el rendimiento de la aplicación.</li>
+      <li>Enviarte notificaciones estrictamente relacionadas con el servicio (si las tienes activadas).</li>
+    </ul>
+  </div>
 
-                <section>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-3">2. Información que recopilamos</h3>
-                    <ul class="list-disc pl-5 space-y-2">
-                        <li><strong>Datos de la cuenta:</strong> Para crear tu perfil, recopilamos tu dirección de correo electrónico y una contraseña segura.</li>
-                        <li><strong>Información del perfil:</strong> Datos opcionales que decides compartir, como tu nombre de Chef, biografía, enlaces sociales y tu foto de perfil (avatar).</li>
-                        <li><strong>Contenido generado por el usuario:</strong> Las recetas, ingredientes, fotografías y valoraciones que subes a nuestra cocina digital.</li>
-                        <li><strong>Datos biométricos (Huella / Face ID):</strong> Cukin permite el inicio de sesión rápido mediante biometría. <em>Nota importante:</em> Cukin utiliza las interfaces nativas de tu dispositivo (Android/iOS). Nosotros nunca recopilamos, almacenamos ni transmitimos tu huella dactilar o datos faciales a nuestros servidores.</li>
-                    </ul>
-                </section>
+  <div class="card">
+    <h2><span class="num">4</span> Compartir y proteger la información</h2>
+    <p>Cukin no vende, alquila ni comercializa tus datos personales a terceros. Solo compartimos información técnica cifrada con los proveedores de infraestructura estrictamente necesarios para que la app funcione (como servicios de alojamiento de bases de datos de máxima seguridad).</p>
+    <p>Implementamos medidas de seguridad líderes en la industria para proteger tu cuenta y tu contenido contra accesos no autorizados.</p>
+  </div>
 
-                <section>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-3">3. Cómo utilizamos tu información</h3>
-                    <p>Utilizamos los datos recopilados exclusivamente para:</p>
-                    <ul class="list-disc pl-5 space-y-2 mt-2">
-                        <li>Crear y gestionar tu cuenta de usuario.</li>
-                        <li>Permitirte publicar recetas y visualizar el contenido de otros Chefs.</li>
-                        <li>Mejorar la estabilidad, seguridad y el rendimiento de la aplicación.</li>
-                        <li>Enviarte notificaciones estrictamente relacionadas con el servicio (si las tienes activadas).</li>
-                    </ul>
-                </section>
+  <div class="card">
+    <h2><span class="num">5</span> Tus Derechos (RGPD y CCPA)</h2>
+    <p>Como usuario, tienes el control absoluto sobre tu información. Tienes derecho a:</p>
+    <ul>
+      <li><b>Acceder</b> a los datos personales que tenemos sobre ti.</li>
+      <li><b>Rectificar</b> cualquier información inexacta desde la sección "Editar Perfil".</li>
+      <li><b>Eliminación (Derecho al olvido):</b> Puedes solicitar la eliminación completa y permanente de tu cuenta y todas tus recetas desde los ajustes de la aplicación o contactándonos.</li>
+      <li><b>Oposición y portabilidad:</b> Solicitar que no procesemos ciertos datos o pedir una copia de los mismos.</li>
+    </ul>
+  </div>
 
-                <section>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-3">4. Compartir y proteger la información</h3>
-                    <p><strong>Cukin no vende, alquila ni comercializa tus datos personales a terceros.</strong> Solo compartimos información técnica cifrada con los proveedores de infraestructura estrictamente necesarios para que la app funcione (como servicios de alojamiento de bases de datos de máxima seguridad).</p>
-                    <p class="mt-2">Implementamos medidas de seguridad líderes en la industria para proteger tu cuenta y tu contenido contra accesos no autorizados.</p>
-                </section>
+  <div class="contact">
+    <h2 style="color:#000"><span class="num" style="background:#000;color:#fff">6</span> Contacto</h2>
+    <p>Si tienes alguna pregunta sobre esta Política de Privacidad o deseas ejercer tus derechos sobre tus datos, puedes ponerte en contacto con nosotros en cualquier momento:</p>
+    <p style="margin-top:12px"><strong style="color:#000">Equipo de Soporte Cukin</strong><br><a href="mailto:support@cukinapp.com">support@cukinapp.com</a></p>
+  </div>
 
-                <section>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-3">5. Tus Derechos (RGPD y CCPA)</h3>
-                    <p>Como usuario, tienes el control absoluto sobre tu información. Tienes derecho a:</p>
-                    <ul class="list-disc pl-5 space-y-2 mt-2">
-                        <li><strong>Acceder</strong> a los datos personales que tenemos sobre ti.</li>
-                        <li><strong>Rectificar</strong> cualquier información inexacta desde la sección "Editar Perfil".</li>
-                        <li><strong>Eliminación (Derecho al olvido):</strong> Puedes solicitar la eliminación completa y permanente de tu cuenta y todas tus recetas desde los ajustes de la aplicación o contactándonos.</li>
-                        <li><strong>Oposición y portabilidad:</strong> Solicitar que no procesemos ciertos datos o pedir una copia de los mismos.</li>
-                    </ul>
-                </section>
-
-                <section>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-3">6. Contacto</h3>
-                    <p>Si tienes alguna pregunta sobre esta Política de Privacidad o deseas ejercer tus derechos sobre tus datos, puedes ponerte en contacto con nosotros en cualquier momento:</p>
-                    <div class="mt-4 p-4 bg-orange-50 rounded-lg inline-block border border-orange-100">
-                        <p class="font-semibold text-gray-900">Equipo de Soporte Cukin</p>
-                        <p class="text-[#F15A24] font-medium mt-1">support@cukinapp.com</p>
-                    </div>
-                </section>
-
-            </div>
-        </div>
-    </main>
-
-    <!-- Pie de página -->
-    <footer class="text-center py-8 text-gray-500 text-sm">
-        <p>&copy; 2026 Cukin App. Todos los derechos reservados.</p>
-    </footer>
-
+  <div class="footer">
+    <a href="/">← Volver a CUKIN</a>
+    <a href="/cookies.html">Política de Cookies</a>
+    <a href="/acceso.html">Acceso</a>
+  </div>
+  <p class="copy">© 2026 Cukin App. Todos los derechos reservados.</p>
+</div>
 </body>
 </html>
