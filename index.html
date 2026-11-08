@@ -537,18 +537,20 @@ document.addEventListener('DOMContentLoaded', function(){ window.CukinCookies.in
   closeBtn.addEventListener('click', closeModal);
   modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
 
-  // 2. Interceptar los clics en los botones de "Solicitar Acceso"
-  document.addEventListener('click', (e) => {
-    // Busca si se ha hecho clic en un elemento que tenga el texto "Solicitar Acceso"
-    const isRequestButton = e.target.textContent && e.target.textContent.includes('Solicitar Acceso');
-    // O si el enlace apunta a #acceso
-    const isAccessLink = e.target.closest('a[href="#acceso"]') || e.target.getAttribute('href') === '#acceso';
-    
-    if (isRequestButton || isAccessLink) {
-      e.preventDefault();
-      openModal();
-    }
-  });
+  // 2. Interceptar los clics ANTES que el resto de la página
+      document.addEventListener('click', (e) => {
+        const elemento = e.target.closest('a, button, [role="button"]'); 
+        if (!elemento) return;
+        
+        const texto = elemento.textContent || '';
+        const enlace = elemento.getAttribute('href') || '';
+        
+        if (texto.includes('Solicitar Acceso') || enlace.includes('acceso')) {
+          e.preventDefault();
+          e.stopPropagation(); // Esto frena la redirección al QR
+          openModal();
+        }
+      }, true);
 
   // 3. Conexión con Supabase
   document.getElementById('waitlist-form').addEventListener('submit', async (e) => {
