@@ -418,144 +418,79 @@ document.addEventListener('DOMContentLoaded', function(){ window.CukinCookies.in
 </script>
 <!-- CUKIN LEGAL - PRIVACIDAD Y TERMINOS - FIN -->
 <!-- MODAL DE LISTA DE ESPERA -->
-<div id="waitlist-modal" class="fixed inset-0 z-[10005] bg-black/80 backdrop-blur-sm flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
-  <div class="bg-gray-900 border border-gray-700 rounded-2xl p-8 max-w-md w-[90%] relative shadow-2xl transform scale-95 transition-transform duration-300">
-    <!-- Botón cerrar -->
-    <button id="close-waitlist" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl leading-none">&times;</button>
+<style>
+  #waitlist-modal {
+    position: fixed; inset: 0; z-index: 10005;
+    background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(5px);
+    display: none; align-items: center; justify-content: center;
+  }
+  #waitlist-modal.show { display: flex; }
+  .wl-content {
+    background: #111; border: 1px solid #333; border-radius: 16px;
+    padding: 30px; width: 90%; max-width: 400px; position: relative;
+    text-align: center; font-family: 'Inter', sans-serif;
+  }
+  .wl-close {
+    position: absolute; top: 12px; right: 16px; font-size: 24px;
+    color: #888; background: none; border: none; cursor: pointer;
+  }
+  .wl-close:hover { color: #fff; }
+  .wl-input {
+    width: 100%; padding: 12px 20px; margin-top: 15px; margin-bottom: 10px;
+    border-radius: 99px; border: 1px solid #444; background: #000; color: #fff;
+    outline: none; box-sizing: border-box;
+  }
+  .wl-input:focus { border-color: #FF4D00; }
+  .wl-btn {
+    width: 100%; padding: 12px 20px; border-radius: 99px; font-weight: bold;
+    background: #FF4D00; color: #fff; border: none; cursor: pointer;
+    box-shadow: 0 0 15px rgba(255,77,0,0.3); transition: 0.3s;
+  }
+  .wl-btn:hover { background: #FF8A5B; }
+</style>
+
+<div id="waitlist-modal">
+  <div class="wl-content">
+    <button id="close-waitlist" class="wl-close">&times;</button>
+    <h3 style="color: #fff; font-size: 22px; margin-bottom: 5px; font-family: 'Space Grotesk', sans-serif;">Únete a la Beta</h3>
+    <p style="color: #aaa; font-size: 14px;">Sé de los primeros en encender los fogones de <span translate="no">CUKIN</span>.</p>
     
-    <h3 class="text-2xl font-bold text-white mb-2 font-['Space_Grotesk']">Únete a la Beta</h3>
-    <p class="text-gray-400 mb-6 text-sm">Déjanos tu correo y sé de los primeros en encender los fogones de <span translate="no">CUKIN</span>.</p>
-    
-    <form id="waitlist-form" class="flex flex-col gap-4">
-      <input 
-        type="email" 
-        id="email-input" 
-        required 
-        placeholder="chef@ejemplo.com" 
-        class="px-5 py-3 rounded-xl border border-gray-700 bg-black/50 text-white placeholder-gray-500 focus:outline-none focus:border-[#FF4D00] w-full"
-      >
-      <button type="submit" class="bg-[#FF4D00] text-white px-6 py-3 rounded-xl font-bold hover:bg-[#FF8A5B] transition shadow-[0_0_15px_rgba(255,77,0,0.4)] w-full">
-        Apuntarme
-      </button>
+    <form id="waitlist-form">
+      <input type="email" id="email-input" class="wl-input" required placeholder="chef@ejemplo.com">
+      <button type="submit" class="wl-btn">Apuntarme</button>
     </form>
-    <p id="form-message" class="text-sm mt-4 hidden text-center font-medium"></p>
+    <p id="form-message" style="font-size: 14px; margin-top: 15px; display: none;"></p>
   </div>
 </div>
 
-<!-- CUKIN - NO TRADUCIR MARCA - INICIO -->
 <script>
-(function(){
-  // La marca Cukin es nombre propio: no debe traducirse a "Cheese" ni a nada.
-  // Google Translate y otros respetan translate="no" + class="notranslate".
-  // Como gran parte del texto lo genera React, este script envuelve la marca en el DOM
-  // después del render y cada vez que React actualiza algo (MutationObserver).
-  var BRAND_RE = /(support@cukinapp\.com|cukinapp\.com\/[a-z\/]+|cukinapp\/[a-z\/]+|cukinapp\.com|CUKIN|Cukin)/g;
-  function isInsideNoTranslate(node){
-    var el = node.parentElement;
-    while(el){
-      if(el.getAttribute && el.getAttribute('translate')==='no') return true;
-      if(el.classList && el.classList.contains('notranslate')) return true;
-      if(el.tagName==='SCRIPT' || el.tagName==='STYLE') return true;
-      el = el.parentElement;
-    }
-    return false;
-  }
-  function protect(root){
-    if(!root || !root.ownerDocument) root = document.body;
-    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
-      acceptNode: function(n){
-        if(!n.nodeValue || !/cukin/i.test(n.nodeValue)) return NodeFilter.FILTER_REJECT;
-        if(isInsideNoTranslate(n)) return NodeFilter.FILTER_REJECT;
-        // No tocar IDs/clases de JS como CukinCookies
-        return NodeFilter.FILTER_ACCEPT;
-      }
-    });
-    var nodes=[]; var nn;
-    while(nn = walker.nextNode()) nodes.push(nn);
-    nodes.forEach(function(textNode){
-      var text = textNode.nodeValue;
-      // No tocar si es código (CukinCookies, CukinLegal, etc.) y solo hay eso
-      if(/Cukin(Cookies|Legal)/.test(text) && !/\bCUKIN\b|\bCukin\b/.test(text.replace(/Cukin(Cookies|Legal)/g,''))) return;
-      BRAND_RE.lastIndex = 0;
-      if(!BRAND_RE.test(text)) return;
-      var parts = text.split(/(support@cukinapp\.com|cukinapp\.com\/[a-z\/]+|cukinapp\/[a-z\/]+|cukinapp\.com|CUKIN|Cukin)/g);
-      if(parts.length<=1) return;
-      var frag = document.createDocumentFragment();
-      parts.forEach(function(part){
-        if(!part) return;
-        if(/^(support@cukinapp\.com|cukinapp\.com\/[a-z\/]+|cukinapp\/[a-z\/]+|cukinapp\.com|CUKIN|Cukin)$/i.test(part)){
-          // No envolver CukinCookies
-          if(/^CukinCookies/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
-          var s=document.createElement('span');
-          s.setAttribute('translate','no');
-          s.className='notranslate';
-          s.textContent=part;
-          frag.appendChild(s);
-        } else {
-          // Este fragmento puede contener CukinCookies -> dejarlo tal cual
-          frag.appendChild(document.createTextNode(part));
-        }
-      });
-      if(textNode.parentNode) textNode.parentNode.replaceChild(frag, textNode);
-    });
-  }
-  function run(){ try{ protect(document.body); }catch(e){} }
-  if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', function(){ setTimeout(run,200); setTimeout(run,800); setTimeout(run,1800); }); }
-  else { setTimeout(run,200); setTimeout(run,800); }
-  window.addEventListener('load', function(){ setTimeout(run,400); });
-  var obs = new MutationObserver(function(){ clearTimeout(obs._t); obs._t=setTimeout(run,150); });
-  if(document.documentElement) obs.observe(document.documentElement, {childList:true, subtree:true, characterData:true});
-  // También proteger el <title> si cambia
-  if(document.title && /cukin/i.test(document.title)){ /* title ya tiene translate=no */ }
-})();
-</script>
-<!-- CUKIN - NO TRADUCIR MARCA - FIN -->
-<script>
-  // 1. Mostrar/Ocultar el Modal
   const modal = document.getElementById('waitlist-modal');
   const closeBtn = document.getElementById('close-waitlist');
-  const innerModal = modal.querySelector('div');
 
-  function openModal() {
-    modal.classList.remove('hidden');
-    // Pequeño retraso para la animación
-    setTimeout(() => {
-      modal.classList.remove('opacity-0');
-      innerModal.classList.remove('scale-95');
-    }, 10);
-  }
-
-  function closeModal() {
-    modal.classList.add('opacity-0');
-    innerModal.classList.add('scale-95');
-    setTimeout(() => {
-      modal.classList.add('hidden');
-      document.getElementById('form-message').classList.add('hidden');
-    }, 300);
+  function openModal() { modal.classList.add('show'); }
+  function closeModal() { 
+    modal.classList.remove('show'); 
+    document.getElementById('form-message').style.display = 'none';
   }
 
   closeBtn.addEventListener('click', closeModal);
   modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
 
-  // 2. Interceptar los clics ANTES que el resto de la página
-      document.addEventListener('click', (e) => {
-        const elemento = e.target.closest('a, button, [role="button"]'); 
-        if (!elemento) return;
-        
-        const texto = elemento.textContent || '';
-        const enlace = elemento.getAttribute('href') || '';
-        
-        if (texto.includes('Solicitar Acceso') || enlace.includes('acceso')) {
-          e.preventDefault();
-          e.stopPropagation(); // Esto frena la redirección al QR
-          openModal();
-        }
-      }, true);
+  document.addEventListener('click', (e) => {
+    const elemento = e.target.closest('a, button, [role="button"]'); 
+    if (!elemento) return;
+    const texto = elemento.textContent || '';
+    const enlace = elemento.getAttribute('href') || '';
+    
+    if (texto.includes('Solicitar Acceso') || enlace.includes('acceso')) {
+      e.preventDefault();
+      e.stopPropagation();
+      openModal();
+    }
+  }, true);
 
-  // 3. Conexión con Supabase
   document.getElementById('waitlist-form').addEventListener('submit', async (e) => {
     e.preventDefault();
-    
     const email = document.getElementById('email-input').value;
     const msg = document.getElementById('form-message');
     const submitBtn = e.target.querySelector('button[type="submit"]');
@@ -577,14 +512,14 @@ document.addEventListener('DOMContentLoaded', function(){ window.CukinCookies.in
         body: JSON.stringify({ email: email })
       });
 
-      msg.classList.remove('hidden');
+      msg.style.display = 'block';
 
       if (response.ok) {
-        msg.innerHTML = '🎉 ¡Felicidades! Ya estás en la lista para la Beta.';
-        msg.className = 'text-sm mt-4 text-green-400 block text-center';
+        msg.innerHTML = '🎉 ¡Felicidades! Ya estás en la lista.';
+        msg.style.color = '#4ade80';
         e.target.reset();
         submitBtn.textContent = '¡Apuntado!';
-        setTimeout(closeModal, 3000); // Cierra solo tras 3 segundos
+        setTimeout(closeModal, 3000);
       } else {
         const errData = await response.json();
         if (errData.code === '23505') throw new Error('Este correo ya está registrado.');
@@ -592,7 +527,7 @@ document.addEventListener('DOMContentLoaded', function(){ window.CukinCookies.in
       }
     } catch (error) {
       msg.textContent = error.message;
-      msg.className = 'text-sm mt-4 text-red-400 block text-center';
+      msg.style.color = '#f87171';
       submitBtn.disabled = false;
       submitBtn.textContent = 'Apuntarme';
     }
