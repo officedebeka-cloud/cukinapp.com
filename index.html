@@ -417,7 +417,30 @@ document.addEventListener('DOMContentLoaded', function(){ window.CukinCookies.in
 })();
 </script>
 <!-- CUKIN LEGAL - PRIVACIDAD Y TERMINOS - FIN -->
-
+<!-- MODAL DE LISTA DE ESPERA -->
+<div id="waitlist-modal" class="fixed inset-0 z-[10005] bg-black/80 backdrop-blur-sm flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+  <div class="bg-gray-900 border border-gray-700 rounded-2xl p-8 max-w-md w-[90%] relative shadow-2xl transform scale-95 transition-transform duration-300">
+    <!-- Botón cerrar -->
+    <button id="close-waitlist" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl leading-none">&times;</button>
+    
+    <h3 class="text-2xl font-bold text-white mb-2 font-['Space_Grotesk']">Únete a la Beta</h3>
+    <p class="text-gray-400 mb-6 text-sm">Déjanos tu correo y sé de los primeros en encender los fogones de <span translate="no">CUKIN</span>.</p>
+    
+    <form id="waitlist-form" class="flex flex-col gap-4">
+      <input 
+        type="email" 
+        id="email-input" 
+        required 
+        placeholder="chef@ejemplo.com" 
+        class="px-5 py-3 rounded-xl border border-gray-700 bg-black/50 text-white placeholder-gray-500 focus:outline-none focus:border-[#FF4D00] w-full"
+      >
+      <button type="submit" class="bg-[#FF4D00] text-white px-6 py-3 rounded-xl font-bold hover:bg-[#FF8A5B] transition shadow-[0_0_15px_rgba(255,77,0,0.4)] w-full">
+        Apuntarme
+      </button>
+    </form>
+    <p id="form-message" class="text-sm mt-4 hidden text-center font-medium"></p>
+  </div>
+</div>
 
 <!-- CUKIN - NO TRADUCIR MARCA - INICIO -->
 <script>
@@ -487,6 +510,91 @@ document.addEventListener('DOMContentLoaded', function(){ window.CukinCookies.in
 })();
 </script>
 <!-- CUKIN - NO TRADUCIR MARCA - FIN -->
+<script>
+  // 1. Mostrar/Ocultar el Modal
+  const modal = document.getElementById('waitlist-modal');
+  const closeBtn = document.getElementById('close-waitlist');
+  const innerModal = modal.querySelector('div');
 
+  function openModal() {
+    modal.classList.remove('hidden');
+    // Pequeño retraso para la animación
+    setTimeout(() => {
+      modal.classList.remove('opacity-0');
+      innerModal.classList.remove('scale-95');
+    }, 10);
+  }
+
+  function closeModal() {
+    modal.classList.add('opacity-0');
+    innerModal.classList.add('scale-95');
+    setTimeout(() => {
+      modal.classList.add('hidden');
+      document.getElementById('form-message').classList.add('hidden');
+    }, 300);
+  }
+
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+
+  // 2. Interceptar los clics en los botones de "Solicitar Acceso"
+  document.addEventListener('click', (e) => {
+    // Busca si se ha hecho clic en un elemento que tenga el texto "Solicitar Acceso"
+    const isRequestButton = e.target.textContent && e.target.textContent.includes('Solicitar Acceso');
+    // O si el enlace apunta a #acceso
+    const isAccessLink = e.target.closest('a[href="#acceso"]') || e.target.getAttribute('href') === '#acceso';
+    
+    if (isRequestButton || isAccessLink) {
+      e.preventDefault();
+      openModal();
+    }
+  });
+
+  // 3. Conexión con Supabase
+  document.getElementById('waitlist-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const email = document.getElementById('email-input').value;
+    const msg = document.getElementById('form-message');
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    
+    const SUPABASE_URL = 'https://xxgnihpmwdthmnyujomy.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_p37gwsUBBjh34f3-XlavPw_eLD5-3QH';
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Guardando...';
+
+    try {
+      const response = await fetch(`${SUPABASE_URL}/rest/v1/waitlist`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+        },
+        body: JSON.stringify({ email: email })
+      });
+
+      msg.classList.remove('hidden');
+
+      if (response.ok) {
+        msg.innerHTML = '🎉 ¡Felicidades! Ya estás en la lista para la Beta.';
+        msg.className = 'text-sm mt-4 text-green-400 block text-center';
+        e.target.reset();
+        submitBtn.textContent = '¡Apuntado!';
+        setTimeout(closeModal, 3000); // Cierra solo tras 3 segundos
+      } else {
+        const errData = await response.json();
+        if (errData.code === '23505') throw new Error('Este correo ya está registrado.');
+        throw new Error('Error de conexión.');
+      }
+    } catch (error) {
+      msg.textContent = error.message;
+      msg.className = 'text-sm mt-4 text-red-400 block text-center';
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Apuntarme';
+    }
+  });
+</script>
 </body>
 </html>
