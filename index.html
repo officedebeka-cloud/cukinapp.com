@@ -506,5 +506,70 @@ document.addEventListener('DOMContentLoaded', function(){ window.CukinCookies.in
     }
   });
 </script>
+<!-- CUKIN - NO TRADUCIR MARCA - INICIO -->
+<script>
+(function(){
+  // Hemos añadido "cukin" en minúsculas para atrapar el texto oculto de React
+  var BRAND_RE = /(support@cukinapp\.com|cukinapp\.com\/[a-z\/]+|cukinapp\.com|CUKIN|Cukin|cukin)/g;
+
+  function isInsideNoTranslate(node){
+    var el = node.parentElement;
+    while(el){
+      if(el.getAttribute && el.getAttribute('translate')==='no') return true;
+      if(el.classList && el.classList.contains('notranslate')) return true;
+      if(el.tagName==='SCRIPT' || el.tagName==='STYLE') return true;
+      el = el.parentElement;
+    }
+    return false;
+  }
+
+  function protect(root){
+    if(!root || !root.ownerDocument) root = document.body;
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode: function(n){
+        if(!n.nodeValue || !n.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+        if(isInsideNoTranslate(n)) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    var nodes=[]; var nn;
+    while(nn = walker.nextNode()) nodes.push(nn);
+    nodes.forEach(function(textNode){
+      var text = textNode.nodeValue;
+      if(/(CukinCookies|Logwt)/.test(text) && !/(CUKIN|Cukin|cukin)/.test(text.replace(/(CukinCookies|Logwt)/g, ''))) return;
+
+      BRAND_RE.lastIndex = 0;
+      if(!BRAND_RE.test(text)) return;
+
+      var parts = text.split(/(support@cukinapp\.com|cukinapp\.com\/[a-z\/]+|cukinapp\.com|CUKIN|Cukin|cukin)/g);
+      if(parts.length<=1) return;
+
+      var frag = document.createDocumentFragment();
+      parts.forEach(function(part){
+        if(!part) return;
+        if(/(support@cukinapp\.com|cukinapp\.com\/[a-z\/]+|cukinapp\.com|CUKIN|Cukin|cukin)/.test(part)){
+          if(/CukinCookies/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
+          var s = document.createElement('span');
+          s.setAttribute('translate', 'no');
+          s.className = 'notranslate';
+          s.textContent = part;
+          frag.appendChild(s);
+        } else {
+          frag.appendChild(document.createTextNode(part));
+        }
+      });
+      if(textNode.parentNode) textNode.parentNode.replaceChild(frag, textNode);
+    });
+  }
+
+  function run(){ try{ protect(document.body); }catch(e){} }
+  if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', function(){ setTimeout(run,200); setTimeout(run,800); }); }
+  else { setTimeout(run,200); setTimeout(run,800); }
+  window.addEventListener('load', function(){ setTimeout(run,400); });
+  var obs = new MutationObserver(function(){ clearTimeout(obs._t); obs._t=setTimeout(run,150); });
+  if(document.documentElement) obs.observe(document.documentElement, {childList:true, subtree:true, characterData:true});
+})();
+</script>
+<!-- CUKIN - NO TRADUCIR MARCA - FIN -->
 </body>
 </html>
